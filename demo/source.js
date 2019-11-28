@@ -2,6 +2,10 @@
 
 echo('Hello world!')
 
+beep(300)
+sleep()
+beep(400)
+
 let a = 10 + 12;
 
 echo('Answer to the sum:', a)
