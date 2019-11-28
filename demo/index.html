@@ -1,42 +1,20 @@
-<!doctype html> <title> JS editor using a Web Worker </title>
+<!doctype html> <title> Javascript editor </title>
 
 <link rel="stylesheet" href="style.css" />
 
-<h1> JS editor using a Web Worker </h1>
+
+<h1> Javascript editor </h1>
 
 
-<pre id="editor" contenteditable="true" title="Click to edit!">
-// Click to edit!
+<div id="editor-wrapper">
 
-echo('Hello world!')
+  <pre class="editor" contenteditable="true" title="Click to edit!"> Loading ... </pre>
 
-let a = 10 + 12;
+  <button class="run"> Play </button>
 
-echo('Answer to the sum:', a)
+  <pre class="log"></pre>
 
-echo(window)
+</div>
 
-function echo(msg, param2 = '') {
-    console.warn('>>', msg, param2)
-    postMessage(msg + ' ' + param2)
-}
-</pre>
-
-
-<button id="run"> Run </button>
-
-<pre id="console"></pre>
 
 <script src="../index.js"></script>
-
-
-<pre>
-
-
-
-© Nick Freear / 28-Nov-2019.
-
-* Source :~ https://gist.github.com/nfreear/307dfbd47c5b64d21cd0265185535de8
-* (Inspiration :~ http://blog.namangoel.com/replacing-eval-with-a-web-worker)
-
-</pre>

@@ -1,12 +1,18 @@
 /**
  */
 
-((WIN, DOC, selButton, selEditor, selConsole, timeoutSec) => {
+(async (WIN, DOC, selector, timeoutSec, sourceUri) => {
   'use strict';
 
-  const $playButton = DOC.querySelector(selButton);
-  const $console = DOC.querySelector(selConsole);
-  const $editor  = DOC.querySelector(selEditor);
+  const $CTR = DOC.querySelector(selector);
+  const $playButton = $CTR.querySelector('.run');
+  const $console = $CTR.querySelector('.log');
+  const $editor  = $CTR.querySelector('.editor');
+
+  const response = await fetch(sourceUri)
+  const source = await response.text();
+  $editor.innerText = source;
+  console.debug('Editor source loaded!')
 
   $playButton.addEventListener('click', ev => {
     const code = $editor.innerText;
@@ -23,6 +29,7 @@
     // add a listener for messages from the Worker
     worker.addEventListener('message', ev => {
       const string = (ev.data).toString();
+      console.warn('>>', string);
       $console.append(`${string} \n`);
     });
 
@@ -45,4 +52,4 @@
 
   console.debug('Check existence of Worker etc.:', Worker, URL, Blob);
 
-})(window, document, '#run', '#editor', '#console', 10 * 1000);
+})(window, document, '#editor-wrapper', 10 * 1000, './source.js');
