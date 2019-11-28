@@ -1,0 +1,34 @@
+
+body {
+  font: .95rem/1.5 sans-serif;
+  margin: 1rem auto;
+  max-width: 40rem;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+button,
+#console,
+#editor {
+  font-size: 1.3rem;
+  margin: 1rem 0;
+  padding: .5rem 1rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+#editor {
+  cursor: edit;
+}
+
+#console,
+#editor {
+  background: #e8e8e8;
+  border: 1px solid #999;
+}
+
+/* End. */
