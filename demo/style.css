@@ -9,26 +9,31 @@ h1 {
   font-weight: normal;
 }
 
-#editor-wrapper button,
-#editor-wrapper .log,
-#editor-wrapper .editor {
+#editor-form button {
+  cursor: pointer;
+}
+
+#editor-form {
+  margin: .5rem;
+}
+
+#editor-form button,
+#editor-form .log,
+#editor-form .editor {
   font-size: 1.3rem;
   margin: 1rem 0;
   padding: .5rem 1rem;
 }
 
-button {
-  cursor: pointer;
-}
-
-#editor-wrapper .editor {
-  cursor: edit;
-}
-
-#editor-wrapper .log,
-#editor-wrapper .editor {
+#editor-form .log,
+#editor-form .editor {
   background: #e8e8e8;
   border: 1px solid #999;
+}
+
+#editor-form .log {
+  max-height: 12rem;
+  overflow-y: scroll;
 }
 
 /* End. */

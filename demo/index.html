@@ -2,18 +2,16 @@
 
 <link rel="stylesheet" href="style.css" />
 
-<h1> Javascript editor </h1>
+<form id="editor-form">
 
-
-<div id="editor-wrapper">
+  <h1> Javascript editor </h1>
 
   <pre class="editor" contenteditable="true" title="Click to edit!"> Loading ... </pre>
 
-  <button class="run"> Play </button>
+  <button> Play </button>
 
   <pre class="log"></pre>
 
-</div>
+</form>
 
-
-<script src="../index.js"></script>
+<script type="module" src="../index.js" data-load-editor="true"></script>

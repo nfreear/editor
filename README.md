@@ -18,7 +18,7 @@ npm start
 
 ## License
 
-  - MIT <https://nfreear.mit-license.org>
+  - MIT :~ <https://nfreear.mit-license.org>
+  - Nick Freear & contributors. With &heart;
 
 ---
-© Nick Freear / 28-Nov-2019.
