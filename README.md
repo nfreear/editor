@@ -1,7 +1,7 @@
 
 # Editor
 
-A simple Javascript editor, built on a Web Worker.
+A simple live-coding Javascript editor, built on a Web Worker.
 
 ## Usage
 

@@ -4,16 +4,17 @@
 
 const audio = new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
 
-export default function(freq = 520, vol = 50, duration = 150) {
-  console.warn('Beep ~ frequency:', freq)
-  const v = audio.createOscillator()
-  const u = audio.createGain()
+export function beep(frequency = 520, duration = 150, volume = 50) {
+  console.warn('Beep ~ frequency:', frequency)
 
-  v.connect(u)
-  v.frequency.value = parseFloat(freq)
-  v.type = "square"
-  u.connect(audio.destination)
-  u.gain.value = 0.01 * parseFloat(vol)
-  v.start(audio.currentTime)
-  v.stop(audio.currentTime + duration * 0.001)
+  const osc  = audio.createOscillator()
+  const gain = audio.createGain()
+
+  osc.connect(gain)
+  osc.frequency.value = parseFloat(frequency)
+  osc.type = "square"
+  gain.connect(audio.destination)
+  gain.gain.value = 0.01 * volume
+  osc.start(audio.currentTime)
+  osc.stop(audio.currentTime + parseInt(duration) * 0.001)
 }

@@ -1,11 +1,11 @@
 /**
- *
+ * The live-editor, implmented as an ES6 module.
  */
 
 import * as config from './src/defaults.js';
 
 async function loadEditor(options = {}) {
-  const CFG = config.default; // Todo: extend ..
+  const CFG = { ...config.default, ...options }; // Merge!
 
   console.warn('Editor config:', CFG)
 
@@ -19,6 +19,11 @@ async function loadEditor(options = {}) {
   $editor.innerText = source;
   console.debug('Editor source loaded!')
 
+  // Inject plugin dispatchers.
+  for (const fnName in CFG.plugins) {
+    CFG.pluginsCode.push('function ' + fnName + '(p){postMessage(`' + fnName + '(${p})`)}');
+  }
+
   const definesResp = await fetch(CFG.preDefinesJs)
   const defines = await definesResp.text();
   console.debug('Pre-defines loaded!')
@@ -26,7 +31,7 @@ async function loadEditor(options = {}) {
   $FORM.addEventListener('submit', ev => {
     ev.preventDefault();
 
-    const code = `${ defines }${ $editor.innerText }`;
+    const code = `${ defines }${ CFG.pluginsCode.join('\n') }\n\n${ $editor.innerText }`;
 
     console.debug('>>>> The code >>>>\n', code);
 
@@ -45,10 +50,11 @@ async function loadEditor(options = {}) {
       $console.append(`${string} \n`);
 
       if (M_CALL) {
-        const FUNC = M_CALL[ 1 ]
-        const PARAM = M_CALL[ 2 ];
+        const FUNC  = M_CALL[ 1 ];
+        const PARAM = M_CALL[ 2 ] === 'undefined' ? undefined : M_CALL[ 2 ];
+        console.debug('Plugin:', M_CALL);
 
-        CFG.plugins[ FUNC ].default( PARAM );
+        CFG.plugins[ FUNC ]( PARAM );
       }
     });
 
@@ -72,6 +78,7 @@ async function loadEditor(options = {}) {
   console.debug('Check existence of Worker etc.:', Worker, URL, Blob);
 }
 
+// Optional auto-loading.
 if (document.querySelector('script[ data-load-editor ]')) {
   loadEditor();
 }

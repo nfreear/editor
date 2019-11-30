@@ -1,9 +1,10 @@
 {
   "private": true,
   "name": "@ndf/editor",
-  "description": "A simple Javascript editor, built on a Web Worker.",
-  "version": "1.0.0",
+  "description": "A simple live-coding Javascript editor, built on a Web Worker.",
+  "version": "0.8.0",
   "license": "MIT",
+  "main": "./index.js",
   "repository": "https://github.com/nfreear/editor.git",
   "devDependencies": {
     "live-server": "^1.2.1"

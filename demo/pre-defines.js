@@ -1,16 +1,14 @@
 // Pre-defines !
 
-function beep(freq = 520) {
-  postMessage(`beep(${ freq })`)
-}
+// Was: function beep(frequency = 520) { postMessage(`beep(${ frequency })`) }
 
 // https://stackoverflow.com/questions/19168837/web-worker-sleep#
 
-function sleep(ms = 300) {
+function sleep(milliseconds = 300) { // 'sleep' only safe in a worker!
   const DL = Date.now()
-  while (Date.now() < DL + ms) {
+  while (Date.now() < DL + milliseconds) {
     /* no-op. */
   }
-};
+}
 
-// ----------------------------------------------
+// Plugins.
