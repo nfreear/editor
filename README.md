@@ -1,5 +1,5 @@
 
-# Editor
+# live-editor
 
 A simple live-coding Javascript editor, built on a Web Worker.
 

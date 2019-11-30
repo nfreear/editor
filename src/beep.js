@@ -4,7 +4,7 @@
 
 const audio = new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
 
-export function beep(frequency = 520, duration = 150, volume = 50) {
+export function beep(frequency = 520, duration = 200, volume = 50) {
   console.warn('Beep ~ frequency:', frequency)
 
   const osc  = audio.createOscillator()

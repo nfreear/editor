@@ -4,83 +4,106 @@
 
 import * as config from './src/defaults.js';
 
-async function loadEditor(options = {}) {
-  const CFG = { ...config.default, ...options }; // Merge!
+export class LiveEditor {
 
-  console.warn('Editor config:', CFG)
+  constructor(options = {}) {
+    this.CFG = { ...config.default, ...options }; // Merge!
 
-  const $FORM = document.querySelector(CFG.selector);
-  // const $playButton = $FORM.querySelector('.run');
-  const $console = $FORM.querySelector('.log');
-  const $editor  = $FORM.querySelector('.editor');
+    this.$form = document.querySelector(this.CFG.selector);
+    // const $playButton = $FORM.querySelector('.run');
+    this.$console = this.$form.querySelector('.log');
+    this.$editor  = this.$form.querySelector('.editor');
 
-  const response = await fetch(CFG.sourceJs)
-  const source = await response.text();
-  $editor.innerText = source;
-  console.debug('Editor source loaded!')
-
-  // Inject plugin dispatchers.
-  for (const fnName in CFG.plugins) {
-    CFG.pluginsCode.push('function ' + fnName + '(p){postMessage(`' + fnName + '(${p})`)}');
+    console.warn('LiveEditor:', this)
   }
 
-  const definesResp = await fetch(CFG.preDefinesJs)
-  const defines = await definesResp.text();
-  console.debug('Pre-defines loaded!')
+  start() {
+    this.fetchSources();
+    this.injectPluginDispatchers();
+    this.setupFormHandler();
+    return this;
+  }
 
-  $FORM.addEventListener('submit', ev => {
-    ev.preventDefault();
+  async fetchSources() {
+    if (this.CFG.sourceJs) {
+      const response = await fetch(this.CFG.sourceJs)
+      const source = await response.text();
+      this.$editor.innerText = source;
+      console.debug('Editor source loaded!')
+    }
 
-    const code = `${ defines }${ CFG.pluginsCode.join('\n') }\n\n${ $editor.innerText }`;
+    if (this.CFG.preDefinesJs) {
+      const definesResp = await fetch(this.CFG.preDefinesJs)
+      this.defines = await definesResp.text();
+      console.debug('Pre-defines loaded!')
+    }
+  }
 
-    console.debug('>>>> The code >>>>\n', code);
+  injectPluginDispatchers () {
+    // Inject plugin dispatchers.
+    for (const fnName in this.CFG.plugins) {
+      this.CFG.pluginsCode.push('function ' + fnName + '(p){postMessage(`' + fnName + '(${p})`)}');
+    }
+  }
 
-    const codeBlob = new Blob([ code ], { type: 'text/javascript' });
+  setupFormHandler() {
+    this.$form.addEventListener('submit', ev => {
+      ev.preventDefault();
 
-    // convert the blob into a pseudo URL
-    const bbURL = URL.createObjectURL(codeBlob);
+      const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
 
-    let worker = new Worker(bbURL);
+      console.debug('>>>> The code >>>>\n', code);
 
-    // add a listener for messages from the Worker
-    worker.addEventListener('message', ev => {
-      const M_CALL = ev.data.match(CFG.pluginsRegex);
-      const string = (ev.data).toString();
-      console.warn('>>', string);
-      $console.append(`${string} \n`);
+      const codeBlob = new Blob([ code ], { type: 'text/javascript' });
 
-      if (M_CALL) {
-        const FUNC  = M_CALL[ 1 ];
-        const PARAM = M_CALL[ 2 ] === 'undefined' ? undefined : M_CALL[ 2 ];
-        console.debug('Plugin:', M_CALL);
+      // convert the blob into a pseudo URL
+      const bbURL = URL.createObjectURL(codeBlob);
 
-        CFG.plugins[ FUNC ]( PARAM );
-      }
+      this.worker = new Worker(bbURL);
+
+      // add a listener for messages from the Worker
+      this.worker.addEventListener('message', ev => this.onWorkerMessage(ev));
+
+      // add a listener for errors from the Worker
+      this.worker.addEventListener('error', err => {
+        const string = (err.message).toString();
+        this.$console.append(`ERROR: ${string} \n`);
+      });
+
+      // Finally, actually start the worker
+      this.worker.postMessage('start');
+
+      // Put a timeout on the worker to automatically kill the worker
+      setTimeout(() => {
+        this.worker.terminate();
+        console.warn('Worker terminated!', worker)
+        this.worker = null;
+      }, this.CFG.timeout);
     });
+  }
 
-    // add a listener for errors from the Worker
-    worker.addEventListener('error', er => {
-      const string = (er.message).toString();
-      $console.append(`ERROR: ${string} \n`);
-    });
+  onWorkerMessage(ev) {
+    const M_CALL = ev.data.match(this.CFG.pluginsRegex);
+    const string = (ev.data).toString();
+    console.warn('>>', string);
+    this.$console.append(`${string} \n`);
 
-    // Finally, actually start the worker
-    worker.postMessage('start');
+    if (M_CALL) {
+      const FUNC  = M_CALL[ 1 ];
+      const PARAM = M_CALL[ 2 ] === 'undefined' ? undefined : M_CALL[ 2 ];
+      console.debug('Plugin:', M_CALL);
 
-    // Put a timeout on the worker to automatically kill the worker
-    window.setTimeout(() => {
-      worker.terminate();
-      console.warn('Worker terminated!', worker)
-      worker = null;
-    }, CFG.timeout);
-  });
+      this.CFG.plugins[ FUNC ]( PARAM );
+    }
+  }
+} // End class.
 
-  console.debug('Check existence of Worker etc.:', Worker, URL, Blob);
-}
+// --------------------------------------------------------
+
+// console.debug('Check existence of Worker etc.:', Worker, URL, Blob);
 
 // Optional auto-loading.
-if (document.querySelector('script[ data-load-editor ]')) {
-  loadEditor();
+if (document.querySelector('script[ data-live-editor ^= a ]')) {
+  const editor = new LiveEditor()
+  editor.start();
 }
-
-export default loadEditor;

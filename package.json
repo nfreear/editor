@@ -1,11 +1,12 @@
 {
   "private": true,
-  "name": "@ndf/editor",
+  "name": "@ndf/live-editor",
   "description": "A simple live-coding Javascript editor, built on a Web Worker.",
   "version": "0.8.0",
   "license": "MIT",
   "main": "./index.js",
-  "repository": "https://github.com/nfreear/editor.git",
+  "repository": "https://github.com/nfreear/live-editor.git",
+  "author": "Nick Freear",
   "devDependencies": {
     "live-server": "^1.2.1"
   },
