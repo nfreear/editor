@@ -5,7 +5,9 @@ image: node:12
 pages:
   stage: deploy
   script:
-  - echo 'Nothing to do...'
+  # - echo 'Nothing to do...'
+  - mkdir public
+  - cp -r index.js src demo public/
   artifacts:
     paths:
     - public
