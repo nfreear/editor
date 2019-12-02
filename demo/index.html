@@ -1,17 +1,26 @@
-<!doctype html> <title> Javascript editor </title>
+<!doctype html> <title> Javascript live-editor </title>
 
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/highlight.js@9.16.2/styles/a11y-dark.css" />
+<link rel="stylesheet" href="https://unpkg.com/github-fork-ribbon-css@0.2.3/gh-fork-ribbon.css" />
 <link rel="stylesheet" href="style.css" />
 
-<form id="editor-form">
 
-  <h1> Javascript editor </h1>
+<form id="live-editor">
 
-  <pre class="editor" contenteditable="true" title="Click to edit!"> Loading ... </pre>
+  <h1> Javascript live-editor </h1>
+
+  <pre><code class="editor javascript" contenteditable="true" title="Click to edit!"> Loading ... </code></pre>
 
   <button> Play </button>
 
   <pre class="log"></pre>
 
 </form>
+
+<a class="github-fork-ribbon right-top" href="https://github.com/nfreear/live-editor" data-ribbon="Fork me on GitHub" title="Fork 'live-editor' on GitHub">Fork me on GitHub</a>
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
 
 <script type="module" src="../index.js" data-live-editor="autoload"></script>

@@ -1,6 +1,8 @@
 
 body {
-  font: .95rem/1.5 sans-serif;
+  background: #fff;
+  color: #333;
+  font: .95rem/1.4 sans-serif;
   margin: 1rem auto;
   max-width: 40rem;
 }
@@ -9,31 +11,48 @@ h1 {
   font-weight: normal;
 }
 
-#editor-form button {
-  cursor: pointer;
-}
-
-#editor-form {
+.live-editor-js {
   margin: .5rem;
 }
 
-#editor-form button,
-#editor-form .log,
-#editor-form .editor {
-  font-size: 1.3rem;
+.live-editor-js .editor {
+  display: block;
+}
+
+.live-editor-js button,
+.live-editor-js .log,
+.live-editor-js .editor {
+  border: 1px solid #aaa;
+  border-radius: .25rem;
+  font-size: 1.2rem;
   margin: 1rem 0;
   padding: .5rem 1rem;
 }
 
-#editor-form .log,
-#editor-form .editor {
-  background: #e8e8e8;
-  border: 1px solid #999;
+.live-editor-js button {
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
-#editor-form .log {
+.live-editor-js button,
+.live-editor-js .log,
+.live-editor-js .editor.no-hljs {
+  background: #e9e9e9;
+}
+
+.live-editor-js .log {
   max-height: 12rem;
+  min-height: 2rem;
   overflow-y: scroll;
+}
+
+.live-editor-js .log .err {
+  color: #a00;
+}
+
+.github-fork-ribbon:before {
+    background-color: #090;
 }
 
 /* End. */

@@ -1,4 +1,5 @@
 # See :~ https://gitlab.com/pages/plain-html/blob/master/.gitlab-ci.yml
+# See :~ https://gitlab.com/gitlab-examples/nodejs/blob/master/.gitlab-ci.yml
 # image: alpine:latest
 image: node:12
 
@@ -8,6 +9,7 @@ pages:
   # - echo 'Nothing to do...'
   - mkdir public
   - cp -r index.js src demo public/
+  - mv public/demo/redirect.html public/index.html
   artifacts:
     paths:
     - public

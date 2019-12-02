@@ -10,17 +10,20 @@ export class LiveEditor {
     this.CFG = { ...config.default, ...options }; // Merge!
 
     this.$form = document.querySelector(this.CFG.selector);
+    this.$form.classList.add('live-editor-js')
     // const $playButton = $FORM.querySelector('.run');
     this.$console = this.$form.querySelector('.log');
     this.$editor  = this.$form.querySelector('.editor');
-
-    console.warn('LiveEditor:', this)
   }
 
   start() {
     this.fetchSources();
     this.injectPluginDispatchers();
     this.setupFormHandler();
+
+    setTimeout(() => this.CFG.highlighter(this.$editor), 600);
+
+    console.warn('LiveEditor:', this)
     return this;
   }
 
@@ -50,6 +53,10 @@ export class LiveEditor {
     this.$form.addEventListener('submit', ev => {
       ev.preventDefault();
 
+      this.CFG.highlighter(this.$editor);
+
+      this.$console.innerHTML = '';
+
       const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
 
       console.debug('>>>> The code >>>>\n', code);
@@ -76,7 +83,7 @@ export class LiveEditor {
       // Put a timeout on the worker to automatically kill the worker
       setTimeout(() => {
         this.worker.terminate();
-        console.warn('Worker terminated!', worker)
+        console.warn('Worker terminated!', this.worker)
         this.worker = null;
       }, this.CFG.timeout);
     });
@@ -97,6 +104,8 @@ export class LiveEditor {
     }
   }
 } // End class.
+
+export { beep } from './src/beep.js';
 
 // --------------------------------------------------------
 

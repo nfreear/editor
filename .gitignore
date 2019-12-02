@@ -3,4 +3,5 @@ node_modules
 package-lock.json
 *.html
 !demo/index.html
+!demo/redirect.html
 /public
