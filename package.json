@@ -12,7 +12,8 @@
     "live-server": "^1.2.1"
   },
   "peerDependencies": {
-    "highlight.js": "^19.6.2"
+    "highlight.js": "^19.6.2",
+    "prismjs": "^1.17.1"
   },
   "scripts": {
     "start": "live-server --port=9001 --no-browser"

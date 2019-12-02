@@ -21,7 +21,7 @@ h1 {
 
 .live-editor-js button,
 .live-editor-js .log,
-.live-editor-js .editor {
+.live-editor-js .editor-pre {
   border: 1px solid #aaa;
   border-radius: .25rem;
   font-size: 1.2rem;
@@ -37,7 +37,7 @@ h1 {
 
 .live-editor-js button,
 .live-editor-js .log,
-.live-editor-js .editor.no-hljs {
+.live-editor-js .editor-pre /*.no-hljs */ {
   background: #e9e9e9;
 }
 

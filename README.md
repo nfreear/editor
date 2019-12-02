@@ -60,7 +60,7 @@ npm start
   - Initial :~ https://gist.github.com/nfreear/307dfbd47c5b64d21cd0265185535de8
   - Inspiration :~ http://blog.namangoel.com/replacing-eval-with-a-web-worker
   - Ideas! :~ https://odino.org/emit-a-beeping-sound-with-javascript/
-  - Highlight.js :~ https://highlightjs.org
+  - Syntax highlighting :~ https://prismjs.com
 
 ## License
 

@@ -1,8 +1,7 @@
 <!doctype html> <title> Javascript live-editor </title>
 
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/highlight.js@9.16.2/styles/a11y-dark.css" />
+<link rel="stylesheet" href="https://unpkg.com/prismjs@1.17.1/themes/prism.css" />
+<link rel="X-stylesheet" href="https://unpkg.com/prismjs@1.17.1/plugins/line-numbers/prism-line-numbers.css" />
 <link rel="stylesheet" href="https://unpkg.com/github-fork-ribbon-css@0.2.3/gh-fork-ribbon.css" />
 <link rel="stylesheet" href="style.css" />
 
@@ -11,7 +10,7 @@
 
   <h1> Javascript live-editor </h1>
 
-  <pre><code class="editor javascript" contenteditable="true" title="Click to edit!"> Loading ... </code></pre>
+  <pre class="editor-pre"><code class="editor" contenteditable="true" title="Click to edit!"> Loading ... </code></pre>
 
   <button> Play </button>
 
@@ -21,6 +20,7 @@
 
 <a class="github-fork-ribbon right-top" href="https://github.com/nfreear/live-editor" data-ribbon="Fork me on GitHub" title="Fork 'live-editor' on GitHub">Fork me on GitHub</a>
 
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
+<script src="https://unpkg.com/prismjs@1.17.1/prism.js" data-manual></script>
+<script data-X-src="https://unpkg.com/prismjs@1.17.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
 
 <script type="module" src="../index.js" data-live-editor="autoload"></script>

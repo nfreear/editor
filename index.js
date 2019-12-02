@@ -14,6 +14,7 @@ export class LiveEditor {
     // const $playButton = $FORM.querySelector('.run');
     this.$console = this.$form.querySelector('.log');
     this.$editor  = this.$form.querySelector('.editor');
+    this.$editor.classList.add('javascript', 'lang-js', 'line-numbers')
   }
 
   start() {
@@ -21,7 +22,7 @@ export class LiveEditor {
     this.injectPluginDispatchers();
     this.setupFormHandler();
 
-    setTimeout(() => this.CFG.highlighter(this.$editor), 600);
+    setTimeout(() => this.CFG.highlighter(this.$editor), 300);
 
     console.warn('LiveEditor:', this)
     return this;
@@ -31,7 +32,7 @@ export class LiveEditor {
     if (this.CFG.sourceJs) {
       const response = await fetch(this.CFG.sourceJs)
       const source = await response.text();
-      this.$editor.innerText = source;
+      this.$editor.textContent = source; // Was: this.$editor.innerText = source;
       console.debug('Editor source loaded!')
     }
 
@@ -49,6 +50,16 @@ export class LiveEditor {
     }
   }
 
+  getSourceCode() {
+    // Editor code first, so that error line-numbers are correct!
+    return `${ this.$editor.innerText }
+
+  // ${ '='.repeat(56) }
+  ${ this.defines }
+  ${ this.CFG.pluginsCode.join('\n') }`;
+    // Was: const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
+  }
+
   setupFormHandler() {
     this.$form.addEventListener('submit', ev => {
       ev.preventDefault();
@@ -57,7 +68,7 @@ export class LiveEditor {
 
       this.$console.innerHTML = '';
 
-      const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
+      const code = this.getSourceCode();
 
       console.debug('>>>> The code >>>>\n', code);
 
@@ -74,7 +85,9 @@ export class LiveEditor {
       // add a listener for errors from the Worker
       this.worker.addEventListener('error', err => {
         const string = (err.message).toString();
-        this.$console.append(`ERROR: ${string} \n`);
+        this.$console.append(`ERROR: ${string} (line ${ err.lineno })\n`);
+
+        console.error(err)
       });
 
       // Finally, actually start the worker
@@ -83,7 +96,7 @@ export class LiveEditor {
       // Put a timeout on the worker to automatically kill the worker
       setTimeout(() => {
         this.worker.terminate();
-        console.warn('Worker terminated!', this.worker)
+        console.debug('Worker terminated!', this.worker)
         this.worker = null;
       }, this.CFG.timeout);
     });
