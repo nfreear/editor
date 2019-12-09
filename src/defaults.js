@@ -6,7 +6,7 @@ export default {
   timeout: 10 * 1000,
   sourceJs: './source.js',
   preDefinesJs: './pre-defines.js',
-  pluginsRegex: /^(beep|[a-z]+)\(([^\)]+)\)/,
+  pluginsRegex: /^fn:(beep|[a-z]+)\(([^\)]+)\)/,
   pluginsCode: [],
   plugins: { beep },
   highlighter,

@@ -1,4 +1,6 @@
 
+[![pipeline status][ci-badge]][ci-link]
+
 # live-editor
 
 A simple live-coding Javascript editor, built on a Web Worker.
@@ -71,3 +73,5 @@ npm start
 
 [demo]: https://nfreear.gitlab.io/live-editor/demo/
 [git]:  https://github.com/nfreear/live-editor
+[ci-badge]: https://gitlab.com/nfreear/live-editor/badges/master/pipeline.svg
+[ci-link]: https://gitlab.com/nfreear/live-editor#!/commits/master "CI status on GitLab"

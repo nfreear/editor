@@ -45,9 +45,11 @@ export class LiveEditor {
 
   injectPluginDispatchers () {
     // Inject plugin dispatchers.
-    for (const fnName in this.CFG.plugins) {
-      this.CFG.pluginsCode.push('function ' + fnName + '(p){postMessage(`' + fnName + '(${p})`)}');
+    for (const fn in this.CFG.plugins) {
+      this.CFG.pluginsCode.push('function ' + fn + '(p){console.warn(`' + fn + ':`, p); postMessage(`fn:' + fn + '(${ JSON.stringify(p) })`)}'); // '(${p})`)}'
     }
+    // function stClip(p){ postMessage(`fn:stclip(${ JSON.stringify(p) })`) }
+    // function stClip(p){ console.warn('stClip:', p); postMessage({ fn: 'stClip', p }) }
   }
 
   getSourceCode() {
@@ -65,6 +67,8 @@ export class LiveEditor {
       ev.preventDefault();
 
       this.CFG.highlighter(this.$editor);
+
+      this.CFG.callbacks.start();
 
       this.$console.innerHTML = '';
 
@@ -111,7 +115,7 @@ export class LiveEditor {
     if (M_CALL) {
       const FUNC  = M_CALL[ 1 ];
       const PARAM = M_CALL[ 2 ] === 'undefined' ? undefined : M_CALL[ 2 ];
-      console.debug('Plugin:', M_CALL);
+      // console.debug('Plugin:', M_CALL);
 
       this.CFG.plugins[ FUNC ]( PARAM );
     }
@@ -119,6 +123,8 @@ export class LiveEditor {
 } // End class.
 
 export { beep } from './src/beep.js';
+
+// window.LiveEditor = LiveEditor;
 
 // --------------------------------------------------------
 

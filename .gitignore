@@ -4,4 +4,7 @@ package-lock.json
 *.html
 !demo/index.html
 !demo/redirect.html
+!demo/scribbletune.html
 /public
+
+/scribbletune
