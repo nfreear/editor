@@ -2,12 +2,13 @@
  * The live-editor, implmented as an ES6 module.
  */
 
-import * as config from './src/defaults.js';
+import config from './src/defaults.js';
 
 export class LiveEditor {
 
   constructor(options = {}) {
-    this.CFG = { ...config.default, ...options }; // Merge!
+    this.CFG = { ...config, ...options }; // Merge!
+    this.CFG.callbacks = { ...config.callbacks, ...options.callbacks };
 
     this.$form = document.querySelector(this.CFG.selector);
     this.$form.classList.add('live-editor-js')
@@ -17,12 +18,13 @@ export class LiveEditor {
     this.$editor.classList.add('javascript', 'lang-js', 'line-numbers')
   }
 
-  start() {
+  run() {
     this.fetchSources();
     this.injectPluginDispatchers();
-    this.setupFormHandler();
+    this.$form.addEventListener('submit', ev => this.onSubmitEditor(ev));
+    // Was: this.setupFormHandler();
 
-    setTimeout(() => this.CFG.highlighter(this.$editor), 300);
+    setTimeout(() => this.CFG.callbacks.highlight(this.$editor), 300);
 
     console.warn('LiveEditor:', this)
     return this;
@@ -46,9 +48,9 @@ export class LiveEditor {
   injectPluginDispatchers () {
     // Inject plugin dispatchers.
     for (const fn in this.CFG.plugins) {
-      this.CFG.pluginsCode.push('function ' + fn + '(p){console.warn(`' + fn + ':`, p); postMessage(`fn:' + fn + '(${ JSON.stringify(p) })`)}'); // '(${p})`)}'
+      this.CFG.pluginsCode.push('function ' + fn + '(p){ postMessage(`fn:' + fn + '(${ JSON.stringify(p) })`) }'); // '(${p})`)}'
     }
-    // function stClip(p){ postMessage(`fn:stclip(${ JSON.stringify(p) })`) }
+    // Was: function stClip(p){ postMessage(`fn:stclip(${ JSON.stringify(p) })`) }
     // function stClip(p){ console.warn('stClip:', p); postMessage({ fn: 'stClip', p }) }
   }
 
@@ -62,11 +64,10 @@ export class LiveEditor {
     // Was: const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
   }
 
-  setupFormHandler() {
-    this.$form.addEventListener('submit', ev => {
+  onSubmitEditor(ev) {
       ev.preventDefault();
 
-      this.CFG.highlighter(this.$editor);
+      this.CFG.callbacks.highlight(this.$editor);
 
       this.CFG.callbacks.start();
 
@@ -103,12 +104,11 @@ export class LiveEditor {
         console.debug('Worker terminated!', this.worker)
         this.worker = null;
       }, this.CFG.timeout);
-    });
   }
 
   onWorkerMessage(ev) {
-    const M_CALL = ev.data.match(this.CFG.pluginsRegex);
     const string = (ev.data).toString();
+    const M_CALL = string.match(this.CFG.pluginsRegex)
     console.warn('>>', string);
     this.$console.append(`${string} \n`);
 
@@ -124,8 +124,6 @@ export class LiveEditor {
 
 export { beep } from './src/beep.js';
 
-// window.LiveEditor = LiveEditor;
-
 // --------------------------------------------------------
 
 // console.debug('Check existence of Worker etc.:', Worker, URL, Blob);
@@ -133,5 +131,5 @@ export { beep } from './src/beep.js';
 // Optional auto-loading.
 if (document.querySelector('script[ data-live-editor ^= a ]')) {
   const editor = new LiveEditor()
-  editor.start();
+  editor.run();
 }

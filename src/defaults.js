@@ -9,11 +9,12 @@ export default {
   pluginsRegex: /^fn:(beep|[a-z]+)\(([^\)]+)\)/,
   pluginsCode: [],
   plugins: { beep },
-  highlighter,
+  callbacks: { highlight, start: () => {} },
 }
 
+// --------------------------------------------------------
 
-function highlighter(editorElem) {
+function highlight(editorElem) {
   // Prism js :~ https://prismjs.com/extending.html#highlight-element
   if ('Prism' in window) {
     window.Prism.highlightElement(editorElem)

@@ -1,4 +1,4 @@
-<!doctype html> <title> Javascript live-editor </title>
+<!doctype html> <title> Scribbletune live-editor </title>
 
 <link rel="stylesheet" href="https://unpkg.com/prismjs@1.17.1/themes/prism.css" />
 <link rel="stylesheet" href="style.css" />
@@ -44,28 +44,19 @@ stclip({
 <script src="https://unpkg.com/tone@13.8.25/build/Tone.js"></script>
 <script src="https://unpkg.com/scribbletune@3.4.1/dist/scribbletune.js"></script>
 
-<script type="module" src="../index.js"></script>
-
 <script type="module">
-  // import { scribbletune } from '../../scribbletune/index.js';
   import { LiveEditor } from '../index.js';
-
-  // const LiveEditor = window.LiveEditor;
-  const scribble = window.scribble;
 
   console.warn('----> Tone.js:', Tone.Sequence, scribble)
 
   const editor = new LiveEditor({
     sourceJs: null,
     // timeout: 20 * 1000,
-    callbacks: {
-      start,
-      // 'plugin:stClip': stClip
-    },
+    callbacks: { start, },
     plugins: { stclip }
   })
 
-  editor.start()
+  editor.run()
 
   function start(ev) {
     console.warn('Tone.Transport.start()', ev)
