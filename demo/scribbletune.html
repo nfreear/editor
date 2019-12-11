@@ -8,27 +8,8 @@
 
   <h1> Scribbletune live-editor </h1>
 
-  <pre class="editor-pre"><code class="editor" contenteditable="true" title="Click to edit!">// Click to edit!
-
-stclip({
-  synth: 'Synth',
-  pattern: '-x',
-  notes: 'C4 D4 C4 D#4 C4 D4 C4 Bb3'
-})
-
-/* stclip({
-  sample: 'https://scribbletune.com/sounds/kick.wav',
-  pattern: 'x',
-  notes: 'c4',
-  subdiv: '16n',
-})
-
-stclip({
-  sample: 'https://scribbletune.com/sounds/bass.wav',
-  pattern: '[-x]',
-  notes: 'c4',
-  subdiv: '16n',
-}) */
+  <pre class="editor-pre"><code class="editor" contenteditable="true" title="Click to edit!">
+    Loading ...
   </code></pre>
 
   <button id="startBtn" type=submit> Start </button> <button type="button" id="stopBtn"> Stop </button>
@@ -37,47 +18,13 @@ stclip({
 
 </form>
 
+
 <a class="github-fork-ribbon right-top" href="https://github.com/nfreear/live-editor" data-ribbon="Fork me on GitHub" title="Fork 'live-editor' on GitHub">Fork me on GitHub</a>
+
 
 <script src="https://unpkg.com/prismjs@1.17.1/prism.js" data-manual></script>
 
 <script src="https://unpkg.com/tone@13.8.25/build/Tone.js"></script>
 <script src="https://unpkg.com/scribbletune@3.4.1/dist/scribbletune.js"></script>
 
-<script type="module">
-  import { LiveEditor } from '../index.js';
-
-  console.warn('----> Tone.js:', Tone.Sequence, scribble)
-
-  const editor = new LiveEditor({
-    sourceJs: null,
-    // timeout: 20 * 1000,
-    callbacks: { start, },
-    plugins: { stclip }
-  })
-
-  editor.run()
-
-  function start(ev) {
-    console.warn('Tone.Transport.start()', ev)
-
-    Tone.Transport.start()
-  }
-
-  document.querySelector('#stopBtn').addEventListener('click', ev => {
-    console.warn('Tone.Transport.stop()', ev)
-
-    Tone.Transport.stop()
-  })
-
-  function stclip(options) {
-    options = JSON.parse(options)
-    console.warn('scribbletune.clip({}):', typeof options, options)
-
-    const clip = scribble.clip(options)
-
-    console.warn('scribbletune.clip({}) 2:', options, clip)
-
-    clip.start()
-  }
-</script>
+<script type="module" src="../src/scribbletune-editor.js"></script>
