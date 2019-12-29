@@ -1,5 +1,5 @@
 /**
- * The live-editor, implmented as an ES6 module.
+ * live-editor, implmented as an ES6 module | https://github.com/nfreear/live-editor | MIT.
  */
 
 import config from './src/defaults.js';
@@ -24,7 +24,7 @@ export class LiveEditor {
     this.$form.addEventListener('submit', ev => this.onSubmitEditor(ev));
     // Was: this.setupFormHandler();
 
-    setTimeout(() => this.CFG.callbacks.highlight(this.$editor), 300);
+    setTimeout(() => this.CFG.callbacks.highlight(this.$editor), this.CFG.highlightTimeout);
 
     console.warn('LiveEditor:', this)
     return this;
@@ -48,7 +48,7 @@ export class LiveEditor {
   injectPluginDispatchers () {
     // Inject plugin dispatchers.
     for (const fn in this.CFG.plugins) {
-      this.CFG.pluginsCode.push('function ' + fn + '(p){ postMessage(`fn:' + fn + '(${ JSON.stringify(p) })`) }'); // '(${p})`)}'
+      this.CFG.pluginsCode.push('function ' + fn + '(p){ postMessage(`fn:' + fn + '(${ JSON.stringify(p) })`) }');
     }
     // Was: function stClip(p){ postMessage(`fn:stclip(${ JSON.stringify(p) })`) }
     // function stClip(p){ console.warn('stClip:', p); postMessage({ fn: 'stClip', p }) }
@@ -58,7 +58,7 @@ export class LiveEditor {
     // Editor code first, so that error line-numbers are correct!
     return `${ this.$editor.innerText }
 
-  // ${ '='.repeat(56) }
+  // ${ '='.repeat(48) }
   ${ this.defines }
   ${ this.CFG.pluginsCode.join('\n') }`;
     // Was: const code = `${ this.defines }${ this.CFG.pluginsCode.join('\n') }\n\n${ this.$editor.innerText }`;
@@ -92,24 +92,28 @@ export class LiveEditor {
         const string = (err.message).toString();
         this.$console.append(`ERROR: ${string} (line ${ err.lineno })\n`);
 
-        console.error(err)
+        console.error('Error:', err)
       });
 
       // Finally, actually start the worker
       this.worker.postMessage('start');
 
       // Put a timeout on the worker to automatically kill the worker
-      setTimeout(() => {
-        this.worker.terminate();
-        console.debug('Worker terminated!', this.worker)
-        this.worker = null;
-      }, this.CFG.timeout);
+      setTimeout(() => this.terminate(), this.CFG.timeout);
+  }
+
+  terminate() {
+    if (this.worker) {
+      this.worker.terminate();
+      console.debug('Worker terminated!', this.worker)
+      this.worker = null;
+    }
   }
 
   onWorkerMessage(ev) {
     const string = (ev.data).toString();
     const M_CALL = string.match(this.CFG.pluginsRegex)
-    console.warn('>>', string);
+    console.debug('>>', string);
     this.$console.append(`${string} \n`);
 
     if (M_CALL) {

@@ -11,7 +11,7 @@ export function beep(frequency = 520, duration = 200, volume = 50) {
   const gain = audio.createGain()
 
   osc.connect(gain)
-  osc.frequency.value = parseFloat(frequency)
+  osc.frequency.value = parseInt(frequency) // In Hertz.
   osc.type = "square"
   gain.connect(audio.destination)
   gain.gain.value = 0.01 * parseFloat(volume)

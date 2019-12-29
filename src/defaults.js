@@ -1,5 +1,6 @@
 
 import { beep } from './beep.js';
+import { highlight } from './highlight.js';
 
 export default {
   selector: '#live-editor', // Was :~ '#editor-form',
@@ -10,20 +11,5 @@ export default {
   pluginsCode: [],
   plugins: { beep },
   callbacks: { highlight, start: () => {} },
-}
-
-// --------------------------------------------------------
-
-function highlight(editorElem) {
-  // Prism js :~ https://prismjs.com/extending.html#highlight-element
-  if ('Prism' in window) {
-    window.Prism.highlightElement(editorElem)
-    console.debug('Prism run on:', editorElem)
-  }
-
-  // Highlight.js :~ https://github.com/highlightjs/highlight.js#custom-initialization
-  if ('hljs' in window) {
-    window.hljs.highlightBlock(editorElem)
-    console.debug('Highlight.js run on:', editorElem)
-  }
+  highlightTimeout: 300,
 }

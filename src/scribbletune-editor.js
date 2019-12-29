@@ -14,7 +14,7 @@ const editor = new LiveEditor({
   sourceJs: './scribbletune-source.js',
   // timeout: 20 * 1000,
   callbacks: { start, },
-  plugins: { stclip }
+  plugins: { stclip, test: param => console.warn('TEST:', param) }
 })
 
 editor.run()

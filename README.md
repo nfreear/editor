@@ -34,17 +34,16 @@ A simple live-coding Javascript editor, built on a Web Worker.
 </form>
 
 <script type="module">
+
   import { LiveEditor, beep } from 'https://nfreear.gitlab.io/live-editor/index.js';
 
   const editor = new LiveEditor({
     plugins: {
       beep,
-      test: function (param) {
-        console.warn('TEST:', param)
-      },
+      test: param => console.warn('TEST:', param),
     }
   })
-  editor.start();
+  editor.run()
 
 </script>
 ```
