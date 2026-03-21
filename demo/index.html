@@ -6,21 +6,8 @@
 <title>CK Editor 5 Demo</title>
 
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/47.6.1/ckeditor5.css">
-
-<style>
-body {
-  margin: auto;
-  max-width: 44rem;
-}
-
-.highlight {
-  .ck-heading-dropdown {
-    & > button {
-      outline: 2px solid darkorange;
-    }
-  }
-}
-</style>
+<link rel="stylesheet" href="assets/ck-dark.css">
+<link rel="stylesheet" href="assets/app.css">
 
 <h1>Editor Demo</h1>
 
@@ -33,11 +20,13 @@ body {
   </ul>
 </nav>
 
+
 <my-editor
   toolbar="accessibilityHelp|undo,redo|heading,link,uploadImage|sourceEditing"
 >
   <p>Hello from CKEditor 5!</p>
   <p><a href="https://ckeditor.com/docs/ckeditor5/latest/features/accessibility.html">Accessibility support</a></p>
+  <p><img src="assets/wikipedia-owl_Bubo_bubo_sibiricus_-_01.jpg" alt="Eurasian eagle-owl"></p>
   <p>…</p>
 </my-editor>
 

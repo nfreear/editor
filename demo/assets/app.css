@@ -1,0 +1,39 @@
+:root {
+  --background: #222;
+  --foreground: #eee;
+  --X_link-color: #adf;
+  --link-color: var(--ck-color-link-default);
+  --highlight: orange;
+}
+
+.highlight {
+  .ck-heading-dropdown {
+    & > button {
+      outline: 2px solid var(--highlight);
+    }
+  }
+}
+
+img {
+  max-height: 300px;
+}
+
+nav {
+  line-height: 1.4;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: auto;
+  max-width: 44rem;
+
+  a[ href ] {
+    color: var(--link-color);
+  }
+}
+
+* {
+  outline-offset: .2rem;
+  text-underline-offset: .2rem;
+}
