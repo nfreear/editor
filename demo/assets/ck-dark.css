@@ -1,9 +1,9 @@
 /*
-
+ Dark Mode stylesheet for CK Editor 5.
  https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/ui/theme-customization.html
 */
 
-:root {
+[ data-dark-mode = true ] {
   /* Helper variables to avoid duplication in the colors. */
 
   --ck-custom-foreground: hsl(255, 3%, 18%);
@@ -14,7 +14,7 @@
 
   --ck-content-font-color: var(--ck-custom-white);
 
-  --ck-color-base-background: hsl(270, 1%, 29%);
+  --ck-color-base-background: hsl(270, 1%, 19%); /* Was: 29%; */
   --ck-color-base-border: hsl(240, 4%, 24%);
 
   --ck-color-focus-border: hsl(208, 90%, 62%);
@@ -98,11 +98,19 @@
   /* -- Overrides the default colors used by the ckeditor5-link package. ---- */
 
   --ck-color-link-default: hsl(190, 100%, 75%);
+
+  /* Source editor. */
+  .ck.ck-editor {
+    textarea {
+      background: #111;
+      color: #eee;
+    }
+  }
 }
 
 /* Improve displaying links. */
 .ck.ck-editor__editable a {
-  color: hsl(210, 100%, 63%);
+  color: var(--ck-color-link-default, hsl(210, 100%, 63%));
 }
 
 /* Improve displaying code blocks. */

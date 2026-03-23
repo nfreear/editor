@@ -1,6 +1,9 @@
 import MyEditorElement from './src/MyEditorElement.js';
+import AltTextHelpPlugin from './src/AltTextHelpPlugin.js';
 
-export function editorApp () {
+const { customElements, location } = window;
+
+function editorApp () {
   const editorElem = document.querySelector('my-editor');
   const params = new URLSearchParams(location.search);
 
@@ -16,11 +19,17 @@ export function editorApp () {
     editorElem.setAttribute('lang-ui', params.get('lang-ui'));
   }
 
+  if (params.has('inspect')) {
+    editorElem.setAttribute('inspect', true);
+  }
+
   customElements.define('my-editor', MyEditorElement);
 
   console.debug('version:', editorVersion());
 }
 
+/** @DEPRECATED
+ */
 export function editorVersion () {
   const importMapElem = document.querySelector('script[ type = importmap ]');
   const importMap = JSON.parse(importMapElem.textContent);
@@ -28,5 +37,7 @@ export function editorVersion () {
   const match = editorPath.match(/@(.+?)\//);
   return match ? match[1] : null;
 }
+
+export { editorApp, AltTextHelpPlugin, MyEditorElement };
 
 export default MyEditorElement;

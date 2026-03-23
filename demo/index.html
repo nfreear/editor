@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-dark-mode="true">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,17 +9,20 @@
 <link rel="stylesheet" href="assets/ck-dark.css">
 <link rel="stylesheet" href="assets/app.css">
 
-<h1>Editor Demo</h1>
+<header>
+  <h1>CK Editor 5 Demo</h1>
 
-<nav>
+  <nav>
   <ul>
-    <li><a href="?">Minimal toolbar</a>
+    <li><a href="?minimal">Minimal toolbar</a>
     <li><a href="?default">Default toolbar</a>
-    <li><a href="?highlight">Highlight</a>
+    <li><a href="?highlight&inspect">Highlight + Inspect</a>
     <li><a href="?lang-ui=fr">French user-interface</a>
   </ul>
-</nav>
+  </nav>
+</header>
 
+<main>
 
 <my-editor
   toolbar="accessibilityHelp|undo,redo|heading,link,uploadImage|sourceEditing"
@@ -27,8 +30,13 @@
   <p>Hello from CKEditor 5!</p>
   <p><a href="https://ckeditor.com/docs/ckeditor5/latest/features/accessibility.html">Accessibility support</a></p>
   <p><img src="assets/wikipedia-owl_Bubo_bubo_sibiricus_-_01.jpg" alt="Eurasian eagle-owl"></p>
-  <p>…</p>
+  <p><small>(Image source: <a href="https://en.wikipedia.org/wiki/Owl">Wikipedia: Owl</a>)</small></p>
 </my-editor>
+
+</main>
+<footer>
+  <p><small>Code source: <a href="https://github.com/nfreear/editor">@nfreear/editor</a></small></p>
+</footer>
 
 
 <script type="importmap">
@@ -40,13 +48,15 @@
 		"cdn:ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/47.6.1/",
 		"ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/47.6.1/ckeditor5-premium-features.js",
 		"ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/47.6.1/",
-    "editorApp": "../index.js"
+    "@ckeditor/ckeditor5-inspector": "https://unpkg.com/@ckeditor/ckeditor5-inspector@5.0.0/build/inspector.js",
+    "index": "../index.js"
 	}
 }
 </script>
 
+
 <script type="module">
-  import { editorApp } from 'editorApp';
+  import { editorApp } from 'index';
 
   editorApp();
 </script>

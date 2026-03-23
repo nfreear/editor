@@ -1,9 +1,20 @@
 :root {
+  --transition: 500ms;
+}
+
+[ data-dark-mode = true ] {
   --background: #222;
   --foreground: #eee;
   --X_link-color: #adf;
   --link-color: var(--ck-color-link-default);
   --highlight: orange;
+  --focus-background: #111;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0;
+  }
 }
 
 .highlight {
@@ -14,19 +25,66 @@
   }
 }
 
+.ck.ck-editor {
+  margin: 2rem 0;
+}
+
+.ck-body {
+  .alt-text-help-plugin-button {
+    border: 2px solid #888;
+    margin: 0 1rem;
+    padding: 0 .8rem;
+  }
+}
+
 img {
   max-height: 300px;
 }
 
 nav {
-  line-height: 1.4;
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 2rem 0;
+    padding: 0;
+
+    & > * {
+      flex-basis: 100%;
+      X_justify-self: stretch;
+    }
+
+    a {
+      border: 1px solid #777;
+      border-radius: .3rem;
+      display: inline-block;
+      padding: .6rem .2rem;
+      text-align: center;
+      width: 90%;
+
+      &:focus,
+      &:hover {
+        background-color: var(--focus-background);
+        border-color: #ccc;
+        transition: all var(--timeout);
+      }
+    }
+  }
+}
+
+dialog {
+  button {
+    display: block;
+    margin: 1rem 0;
+    padding: .3rem .6rem;
+  }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   margin: auto;
-  max-width: 44rem;
+  max-width: 45rem;
+  padding: 0 1rem;
 
   a[ href ] {
     color: var(--link-color);
