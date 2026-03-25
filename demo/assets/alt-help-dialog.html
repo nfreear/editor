@@ -1,0 +1,41 @@
+<alt-help-dialog>
+  <template shadowrootmode="open">
+    <!--
+      Content: © 2025 Will Sutton. (https://alternativetext.co.uk/)
+    -->
+    <p>
+      <button part="button" command="show-modal" commandfor="altHelpDialog">Show help</button>
+    </p>
+    <dialog part="dialog" id="altHelpDialog" aria-labelledby="dialogLabel">
+      <button part="closeButton" command="close" commandfor="altHelpDialog">Close</button>
+
+      <h2 part="h2" id="dialogLabel">A Guide to Writing Great Alt Text</h2>
+
+      <h3>Why is Alt Text Important?</h3>
+      <p>Alternative (or alt) text provides a textual description of an image for users who cannot see it. This is essential for:</p>
+      <ul>
+        <li><strong>Screen reader users:</strong> People who are blind or have low vision rely on screen readers to announce the alt text, allowing them to understand the image's content and purpose.
+        <li><strong>Search Engine Optimization (SEO):</strong> Search engines use alt text to understand the content of an image, which can improve your site's search ranking.
+        <li><strong>Broken images:</strong> If an image fails to load, the browser will display the alt text in its place, preserving the context.
+      </ul>
+
+      <h3>Tips for Writing Good Alt Text</h3>
+      <ul>
+        <li><strong>Be Specific and Succinct:</strong> Describe what’s important in the image without being overly verbose. Aim for a short sentence or two.
+        <li><strong>Don't be redundant:</strong> Avoid starting with phrases like "Image of..." or "A picture of...". Screen readers already announce that it's an image.
+        <li><strong>Describe the context:</strong> If the image's context is important for understanding the page, include it in the description.
+        <li><strong>Transcribe important text:</strong> If an image contains text that is not present elsewhere, your alt text should include that text.
+      </ul>
+      <small>Above content: © 2025 Will Sutton.</small>
+
+      <hr aria-hidden="true">
+
+      <h3>Useful Resources</h3>
+      <ul>
+        <li><a href="https://alternativetext.co.uk/">AI ALT Text Generator</a>
+        <li><a href="https://poet.diagramcenter.org/">Poet Image Description</a>
+        <li><a href="https://www.w3.org/WAI/tutorials/images/decision-tree/">W3C ALT Decision Tree</a></li>
+      </ul>
+    </dialog>
+  </template>
+</alt-help-dialog>

@@ -3,14 +3,18 @@
   "type": "module",
   "main": "index.js",
   "devDependencies": {
+    "editoria11y": "github:itmaybejj/editoria11y",
     "eslint": "^9.39.4",
     "neostandard": "^0.13.0",
     "servor": "^4.0.2"
   },
   "scripts": {
+    "build": "npm run cp:ed11y:esm && npm run cp:ed11y:css",
+    "cp:ed11y:esm": "cp ./node_modules/editoria11y/dist/js/ed11y.esm.js ./editoria11y/",
+    "cp:ed11y:css": "cp ./node_modules/editoria11y/dist/css/editoria11y.css ./editoria11y/",
     "lint": "npx eslint",
     "lint:fix": "npx eslint --fix",
-    "start": "npx servor"
+    "start": "npm run build && npx servor"
   },
   "repository": {
     "type": "git",

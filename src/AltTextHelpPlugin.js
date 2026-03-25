@@ -1,3 +1,4 @@
+import { Plugin, Image } from 'ckeditor5';
 // import { EmitterMixin, mix } from 'ckeditor5';
 
 /**
@@ -6,20 +7,23 @@
  * @see https://ckeditor.com/docs/ckeditor5/latest/framework/tutorials/crash-course/plugins.html
  * @see https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/event-system.html
  */
-export default class AltTextHelpPlugin {
+export default class AltTextHelpPlugin extends Plugin {
   #commandName = 'imageTextAlternative';
-  #editor;
+  // #editor;
   #command;
   #ckBodyElement;
   #createdFlag;
 
-  get pluginName () { return 'AltTextHelpPlugin'; }
-  get isOfficialPlugin () { return false; }
+  static get pluginName () { return 'AltTextHelpPlugin'; }
+  static get requires () { return [Image]; /** @TODO Anything else?! */ }
+  // static get isOfficialPlugin () { return false; }
 
+  get #editor () { return this.editor; }
   get #editorElement () { return this.#editor.ui.view.element; }
 
   constructor (editorInst) {
-    this.#editor = editorInst;
+    super(editorInst);
+    // this.#editor = editorInst;
     this.#editor.on('ready', (ev) => this.#editorReady(ev));
   }
 
@@ -39,7 +43,7 @@ export default class AltTextHelpPlugin {
   }
 
   async #isEnabledEvent (ev, propName, newValue, oldValue) {
-    await delay();
+    await delay(2000); /** @TODO Need a better fix! */
 
     if (newValue) {
       const ckButtonElem = this.#queryCkBody('.ck-balloon-panel_with-arrow'); // Was: '.. button'
@@ -73,7 +77,7 @@ export default class AltTextHelpPlugin {
     const dialog = document.createElement('dialog');
 
     dialog.id = 'altTextHelpDialog';
-    dialog.textContent = 'Some help and guidance on setting text alternatives for images...';
+    dialog.textContent = 'TODO: Some help and guidance on setting text alternatives for images...';
 
     closeButton.textContent = 'close';
     closeButton.setAttribute('command', 'close');

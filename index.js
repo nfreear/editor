@@ -1,11 +1,14 @@
 import MyEditorElement from './src/MyEditorElement.js';
 import AltTextHelpPlugin from './src/AltTextHelpPlugin.js';
+import ImportContentElement from './src/ImportContentElement.js';
 
 const { customElements, location } = window;
 
 function editorApp () {
   const editorElem = document.querySelector('my-editor');
   const params = new URLSearchParams(location.search);
+
+  document.documentElement.dataset.darkMode = !params.has('light-mode');
 
   if (params.has('highlight')) {
     document.body.classList.add('highlight');
@@ -24,6 +27,7 @@ function editorApp () {
   }
 
   customElements.define('my-editor', MyEditorElement);
+  customElements.define('import-content', ImportContentElement); // For "test.html"!
 
   console.debug('version:', editorVersion());
 }
