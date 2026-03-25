@@ -1,4 +1,5 @@
 import MyEditorElement from './src/MyEditorElement.js';
+import MyEditoria11yElement from './src/editoria11y.js';
 import AltTextHelpPlugin from './src/AltTextHelpPlugin.js';
 import ImportContentElement from './src/ImportContentElement.js';
 
@@ -27,9 +28,10 @@ function editorApp () {
   }
 
   customElements.define('my-editor', MyEditorElement);
+  customElements.define('my-editoria11y', MyEditoria11yElement); // For "test.html"!
   customElements.define('import-content', ImportContentElement); // For "test.html"!
 
-  console.debug('version:', editorVersion());
+  console.debug('editorApp completed OK.');
 }
 
 /** @DEPRECATED
@@ -42,6 +44,6 @@ export function editorVersion () {
   return match ? match[1] : null;
 }
 
-export { editorApp, AltTextHelpPlugin, MyEditorElement };
+export { editorApp, AltTextHelpPlugin, MyEditorElement, ImportContentElement };
 
 export default MyEditorElement;

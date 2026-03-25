@@ -1,7 +1,11 @@
 {
   "private": true,
   "type": "module",
-  "main": "index.js",
+  "exports": {
+    ".": "index.js",
+    "./my-editoria11y": "src/editoria11y.js",
+    "./ck-dark.css": "demo/assets/ck-dark.css"
+  },
   "devDependencies": {
     "editoria11y": "github:itmaybejj/editoria11y",
     "eslint": "^9.39.4",

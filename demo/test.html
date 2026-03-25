@@ -13,6 +13,7 @@
 
 <header>
   <h1>CK Editor 5 + Editoria11y Test</h1>
+  <p>Experimental: this file contains intentional accessibility problems!</p>
 
   <nav>
   <ul>
@@ -56,32 +57,34 @@
   <iframe src="./assets/alt-help-dialog.html"></iframe>
 </import-content>
 
+<my-editoria11y
+  check-root="main"
+  css-url="../editoria11y/editoria11y.css"
+>
+</my-editoria11y>
+
 
 <script type="importmap">
 {
-	"imports": {
+  "imports": {
     "ckeditor5": "https://unpkg.com/ckeditor5@47.6.1/dist/browser/ckeditor5.js",
     "ckeditor5/": "https://unpkg.com/ckeditor5@47.6.1/dist/",
-		"@ckeditor/ckeditor5-inspector": "https://unpkg.com/@ckeditor/ckeditor5-inspector@5.0.0/build/inspector.js",
+    "@ckeditor/ckeditor5-inspector": "https://unpkg.com/@ckeditor/ckeditor5-inspector@5.0.0/build/inspector.js",
     "X_DISABLE__:editoria11y": "../node_modules/editoria11y/dist/js/ed11y.esm.js",
-    "editoria11y": "../editoria11y/ed11y.esm.js",
-    "editoria11y.test": "../src/editoria11y.js",
+    "X_DISABLE__:editoria11y": "../editoria11y/ed11y.esm.js",
+    "X_DISABLE__:editoria11y.test": "../src/editoria11y.js",
     "index": "../index.js"
-	}
+  }
 }
 </script>
 
 
-<script X_DISABLE__src="https://cdn.jsdelivr.net/gh/itmaybejj/editoria11y@2/dist/editoria11y.min.js"></script>
-
 <script type="module">
   import { editorApp } from 'index';
-  import editoria11yTest from 'editoria11y.test';
 
   editorApp();
 
-  editoria11yTest();
-  // setTimeout(() => editoria11yTest(), 2000);
+  // Was: editoria11yTest();
 </script>
 
 </html>
